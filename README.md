@@ -3,19 +3,30 @@ Bring some logic to js waterfalls
 
 
 **Before:**
-```
+```js
 let num = Math.pow(2, 10)
-if (isEngineeringMode) num = num.toExponential()
-if (toUpper) num = num.toUpperCase()
+
+if (isEngineeringMode) {
+  num = num.toExponential()
+}
+
+if (toUpper) {
+  num = num.toUpperCase()
+}
+
+num += 'um'
+
+num += 'numnum'
+
 return num
 ```
 
 **After:**
-```
-const num = cond(Math.pow(2, 10))
+```js
+return cond(Math.pow(2, 10))
   .if(isEngineeringMode, num => num.toExponential())
   .if(toUpper, num => num.toUpperCase())
-  .end()
-
-return num
+  .chain(num => num + 'um')
+  .pipe(num => num + 'numnum')
+  .end
 ```
