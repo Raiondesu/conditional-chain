@@ -5,12 +5,11 @@ module.exports = function cond(value) {
 
   return {
     if (condition, thenF, elseF) {
-      return cond(condition ? thenF(value) : (
-        elseF ? elseF(value) : value
-      ))
+      return cond(condition ? thenF(value) : (elseF ? elseF(value) : value))
     },
     chain: chain,
     pipe: chain,
-    end: value
+    get end() { return value; },
+    get result() { return value; }
   }
 }
