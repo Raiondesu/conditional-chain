@@ -11,9 +11,28 @@ module.exports = function cond(value) {
         elseF ? elseF(value) : value
       ))
     },
+    try (f) {
+      var res
+
+      try {
+        res = cond(f(value))
+
+        res.catch = function catchF() {
+          return cond(value)
+        }
+      } catch (e) {
+        res = cond(value)
+
+        res.catch = function catchF(f) {
+          return f(e, value)
+        }
+      } finally {
+        return res
+      }
+    },
     chain: chain,
     pipe: chain,
-    get end() { return value; },
-    get result() { return value; }
+    end() { return value },
+    get _() { return value; }
   }
 }
