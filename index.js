@@ -4,8 +4,12 @@ module.exports = function cond(value) {
   }
 
   return {
-    if (condition, thenF, elseF) {
-      return cond(condition ? thenF(value) : (elseF ? elseF(value) : value))
+    if (c, thenF, elseF) {
+      var condition = typeof c === 'function' ? c(value) : c;
+
+      return cond(condition ? thenF(value) : (
+        elseF ? elseF(value) : value
+      ))
     },
     chain: chain,
     pipe: chain,
