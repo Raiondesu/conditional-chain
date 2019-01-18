@@ -1,15 +1,16 @@
-module.exports = function cond (chain) {
+module.exports = function cond(value) {
+  function chain(f) {
+    return cond(f(value))
+  }
+
   return {
-    if (condition, thanF, elseF) {
-      return cond(condition? thanF(chain) : (
-        elseF? elseF(chain) : chain
+    if (condition, thenF, elseF) {
+      return cond(condition ? thenF(value) : (
+        elseF ? elseF(value) : value
       ))
     },
-    chain (f) {
-      return cond(f(chain))
-    },
-    end () {
-      return chain
-    }
+    chain: chain,
+    pipe: chain,
+    end: value
   }
 }
